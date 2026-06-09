@@ -60,7 +60,7 @@ export function Footer() {
               {[
                 { icon: GitBranch, href: personalInfo.social.github, label: "GitHub" },
                 { icon: Globe, href: personalInfo.social.linkedin, label: "LinkedIn" },
-                { icon: MessageCircle, href: personalInfo.social.twitter, label: "Twitter" },
+                // { icon: MessageCircle, href: personalInfo.social.twitter, label: "Twitter" },
               ].map(({ icon: Icon, href, label }) => (
                 <motion.a
                   key={label}

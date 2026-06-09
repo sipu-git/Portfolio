@@ -30,7 +30,7 @@ export interface Project {
   tags: string[];
   category: string;
   github: string;
-  demo: string;
+  demo?: string;
   features: string[];
   stats: { stars: number; forks: number; issues: number };
 }

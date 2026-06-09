@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { GitBranch, ExternalLink, Star, GitFork, X, Check } from "lucide-react";
+import { GitBranch, Star, GitFork, X, Check } from "lucide-react";
 import { projects } from "@/data/portfolio";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Project } from "@/types";

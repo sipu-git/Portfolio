@@ -1,10 +1,10 @@
-# 🚀 Alex Johnson - Portfolio Website
+# 🚀 Sipu Rana - Portfolio Website
 
 A modern, fully responsive, production-ready personal portfolio built with Next.js 15, TypeScript, Tailwind CSS, and Framer Motion.
 
 ## ✨ Features
 
-- **11 Sections**: Hero, About, Skills, Experience, Projects, Services, Achievements, Testimonials, Blog, Contact, Footer
+- **11 Sections**: Hero, About, Skills, Experience, Projects, Services, Contact, Footer
 - **Framer Motion Animations**: Scroll-triggered, hover, stagger, and entrance animations
 - **Glassmorphism UI**: Modern glass-effect cards throughout
 - **Dark/Light Mode**: Persistent theme with next-themes
@@ -14,7 +14,6 @@ A modern, fully responsive, production-ready personal portfolio built with Next.
 - **Project Modal**: Click any project for detailed view
 - **Auto-Carousel**: Testimonials with auto-slide
 - **Contact Form**: With validation, loading state, and success screen
-- **SEO Ready**: Open Graph, Twitter Cards, metadata API
 - **TypeScript**: Fully typed throughout
 
 ## 🛠 Tech Stack

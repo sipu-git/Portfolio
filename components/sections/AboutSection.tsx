@@ -123,7 +123,7 @@ export function AboutSection() {
                   { label: "Name", value: personalInfo.name },
                   { label: "Email", value: personalInfo.email },
                   { label: "Location", value: personalInfo.location },
-                  { label: "Availability", value: "Open to work" },
+                  { label: "Phone", value: personalInfo.phone },
                 ].map(({ label, value }) => (
                   <div key={label}>
                     <div className="text-slate-500 mb-0.5">{label}</div>

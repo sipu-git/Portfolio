@@ -29,12 +29,14 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollTo = (href: string, label: string) => {
-    setActive(label);
-    setIsOpen(false);
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-  };
 
+const scrollTo = (href: string, label: string) => {
+  setActive(label);
+  setIsOpen(false);
+  setTimeout(() => {
+    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+  }, 300);
+};
   return (
     <motion.nav
       initial={{ y: -100 }}

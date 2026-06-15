@@ -4,6 +4,8 @@ import { GitBranch, Globe, MessageCircle, Download, Mail, ArrowDown } from "luci
 import { personalInfo, typingRoles } from "@/data/portfolio";
 import { useTypingEffect } from "@/hooks/useTypingEffect";
 import Image from "next/image";
+import { FaLinkedinIn } from "react-icons/fa6";
+import { FaGithub } from "react-icons/fa";
 
 const particles = Array.from({ length: 50 }, (_, i) => ({
   id: i,
@@ -14,7 +16,7 @@ const particles = Array.from({ length: 50 }, (_, i) => ({
   delay: Math.random() * 5,
 }));
 
-const floatingIcons = ["⚛️", "🚀", "💻", "🔧", "🐳", "☁️", "🗄️", "📱"];
+// const floatingIcons = ["⚛️", "🚀", "💻", "🔧", "🐳", "☁️", "🗄️", "📱"];
 
 export function HeroSection() {
   const typedText = useTypingEffect(typingRoles);
@@ -50,7 +52,7 @@ export function HeroSection() {
       </div>
 
       {/* Floating tech icons */}
-      {floatingIcons.map((icon, i) => (
+      {/* {floatingIcons.map((icon, i) => (
         <motion.div
           key={i}
           className="absolute text-2xl select-none pointer-events-none"
@@ -67,7 +69,7 @@ export function HeroSection() {
         >
           {icon}
         </motion.div>
-      ))}
+      ))} */}
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
@@ -79,7 +81,7 @@ export function HeroSection() {
             transition={{ duration: 0.8 }}
             className="flex-1 text-center lg:text-left"
           >
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
@@ -87,7 +89,7 @@ export function HeroSection() {
             >
               <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
               Available for work
-            </motion.div>
+            </motion.div> */}
 
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
@@ -163,8 +165,8 @@ export function HeroSection() {
               className="flex gap-4 justify-center lg:justify-start"
             >
               {[
-                { Icon: GitBranch, href: personalInfo.social.github, label: "GitHub" },
-                { Icon: Globe, href: personalInfo.social.linkedin, label: "LinkedIn" },
+                { Icon: FaGithub, href: personalInfo.social.github, label: "GitHub" },
+                { Icon: FaLinkedinIn, href: personalInfo.social.linkedin, label: "LinkedIn" },
                 // { Icon: MessageCircle, href: personalInfo.social.twitter, label: "Twitter" },
               ].map(({ Icon, href, label }) => (
                 <motion.a

@@ -37,7 +37,7 @@ export function SkillsSection() {
         <SectionHeader
           badge="Technical Skills"
           title="My Tech"
-          highlight="Arsenal"
+          highlight="Stacks"
           subtitle="Technologies I work with to build powerful, scalable applications"
         />
 

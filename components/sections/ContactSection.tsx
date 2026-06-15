@@ -5,6 +5,7 @@ import { Mail, Phone, MapPin, GitBranch, Globe, Send, Loader2, CheckCircle, Aler
 import { personalInfo } from "@/data/portfolio";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import emailjs from "@emailjs/browser";
+import { FaLinkedinIn, FaGithub } from "react-icons/fa6";
 
 interface FormData extends Record<string, string> {
   name: string;
@@ -201,12 +202,12 @@ export function ContactSection() {
 
   const socials: Social[] = [
     {
-      icon: GitBranch,
+      icon: FaGithub,
       href: personalInfo.social.github,
       label: "GitHub",
     },
     {
-      icon: Globe,
+      icon: FaLinkedinIn,
       href: personalInfo.social.linkedin,
       label: "LinkedIn",
     },
@@ -372,11 +373,10 @@ export function ContactSection() {
                           value={form[id as keyof FormData]}
                           onChange={handleChange}
                           placeholder={placeholder}
-                          className={`w-full px-4 py-3 rounded-xl bg-slate-800/50 border ${
-                            errors[id as keyof FormErrors]
+                          className={`w-full px-4 py-3 rounded-xl bg-slate-800/50 border ${errors[id as keyof FormErrors]
                               ? "border-red-500/50 focus:border-red-500/70"
                               : "border-white/10 focus:border-blue-500/50"
-                          } text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-blue-500/20 transition-all text-sm`}
+                            } text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-blue-500/20 transition-all text-sm`}
                         />
                         {errors[id as keyof FormErrors] && (
                           <p className="text-red-400 text-xs mt-1">
@@ -398,11 +398,10 @@ export function ContactSection() {
                       value={form.subject}
                       onChange={handleChange}
                       placeholder="Project collaboration / Job opportunity / Question"
-                      className={`w-full px-4 py-3 rounded-xl bg-slate-800/50 border ${
-                        errors.subject
+                      className={`w-full px-4 py-3 rounded-xl bg-slate-800/50 border ${errors.subject
                           ? "border-red-500/50 focus:border-red-500/70"
                           : "border-white/10 focus:border-blue-500/50"
-                      } text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-blue-500/20 transition-all text-sm`}
+                        } text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-blue-500/20 transition-all text-sm`}
                     />
                     {errors.subject && (
                       <p className="text-red-400 text-xs mt-1">{errors.subject}</p>
@@ -420,11 +419,10 @@ export function ContactSection() {
                       onChange={handleChange}
                       rows={5}
                       placeholder="Tell me about your project or opportunity..."
-                      className={`w-full px-4 py-3 rounded-xl bg-slate-800/50 border ${
-                        errors.message
+                      className={`w-full px-4 py-3 rounded-xl bg-slate-800/50 border ${errors.message
                           ? "border-red-500/50 focus:border-red-500/70"
                           : "border-white/10 focus:border-blue-500/50"
-                      } text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-blue-500/20 transition-all text-sm resize-none`}
+                        } text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-blue-500/20 transition-all text-sm resize-none`}
                     />
                     {errors.message && (
                       <p className="text-red-400 text-xs mt-1">

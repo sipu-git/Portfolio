@@ -2,6 +2,8 @@
 import { motion } from "framer-motion";
 import { ArrowUp, GitBranch, Globe, MessageCircle, Code2, Heart } from "lucide-react";
 import { personalInfo } from "@/data/portfolio";
+import { FaGithub } from "react-icons/fa";
+import { FaLinkedinIn } from "react-icons/fa6";
 
 const quickLinks = [
   { label: "About", href: "#about" },
@@ -58,8 +60,8 @@ export function Footer() {
             <h3 className="font-semibold text-white mb-4 text-sm uppercase tracking-widest">Connect</h3>
             <div className="flex gap-3 mb-4">
               {[
-                { icon: GitBranch, href: personalInfo.social.github, label: "GitHub" },
-                { icon: Globe, href: personalInfo.social.linkedin, label: "LinkedIn" },
+                { icon: FaGithub, href: personalInfo.social.github, label: "GitHub" },
+                { icon: FaLinkedinIn, href: personalInfo.social.linkedin, label: "LinkedIn" },
                 // { icon: MessageCircle, href: personalInfo.social.twitter, label: "Twitter" },
               ].map(({ icon: Icon, href, label }) => (
                 <motion.a

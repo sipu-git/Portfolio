@@ -10,7 +10,7 @@ export const personalInfo = {
   summary:
     "I specialize in building end-to-end web applications using modern technologies. From crafting pixel-perfect UIs to designing robust backend architectures, I bring ideas to life with clean, maintainable code.",
   avatar: "/images/avatar.jpg",
-  resumeUrl: "/resume.pdf",
+  resumeUrl: "https://drive.google.com/file/d/1t66V4JxksuwX0HuubJ6beBVNM3zhdb9j/view?usp=sharing",
   social: {
     github: "https://github.com/sipu-git",
     linkedin: "https://www.linkedin.com/in/sipu-rana-72b56b242",
@@ -41,7 +41,7 @@ export const education = [
   },
   {
     degree: "Bachelor Of Computer Applications",
-    school: "Bhannja College Of Computer & Management",
+    school: "Bhanja College Of Computer & Management",
     year: "2020-2023",
     grade: "Percentage: 79%",
   },
@@ -52,7 +52,7 @@ export const skillCategories = [
     category: "Frontend",
     color: "blue",
     skills: [
-      { name: "React.js", level: 95 },
+      { name: "React.js", level: 90 },
       { name: "Next.js", level: 90 },
       { name: "TypeScript", level: 88 },
       { name: "JavaScript", level: 88 },
@@ -64,7 +64,7 @@ export const skillCategories = [
     category: "Backend",
     color: "indigo",
     skills: [
-      { name: "Node.js", level: 90 },
+      { name: "Node.js", level: 85 },
       { name: "Express.js", level: 88 },
       // { name: "NestJS", level: 78 },
     ],
@@ -106,7 +106,7 @@ export const experiences = [
     id: 1,
     company: "Sparkradix Technologies PVT.Ltd",
     position: "Software Developer",
-    duration: "Jul 2024 – Present",
+    duration: "Jul 2025 – Present",
     location: "Bhubaneswar,Odisha,India",
     description:
       "Lead development of enterprise-grade web applications serving 500K+ users. Architected microservices infrastructure and mentored junior developers.",

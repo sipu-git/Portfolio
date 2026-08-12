@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
 
 export function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -7,19 +8,21 @@ export function CustomCursor() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (!cursorRef.current || !followerRef.current) return;
+
+    const setCursorX = gsap.quickTo(cursorRef.current, "x", { duration: 0.1, ease: "power3.out" });
+    const setCursorY = gsap.quickTo(cursorRef.current, "y", { duration: 0.1, ease: "power3.out" });
+    const setFollowerX = gsap.quickTo(followerRef.current, "x", { duration: 0.5, ease: "power3.out" });
+    const setFollowerY = gsap.quickTo(followerRef.current, "y", { duration: 0.5, ease: "power3.out" });
+
     const move = (e: MouseEvent) => {
-      if (cursorRef.current) {
-        cursorRef.current.style.left = `${e.clientX - 10}px`;
-        cursorRef.current.style.top = `${e.clientY - 10}px`;
-      }
-      if (followerRef.current) {
-        setTimeout(() => {
-          followerRef.current!.style.left = `${e.clientX - 20}px`;
-          followerRef.current!.style.top = `${e.clientY - 20}px`;
-        }, 80);
-      }
+      setCursorX(e.clientX - 10);
+      setCursorY(e.clientY - 10);
+      setFollowerX(e.clientX - 20);
+      setFollowerY(e.clientY - 20);
     };
-    window.addEventListener("mousemove", move);
+
+    window.addEventListener("mousemove", move, { passive: true });
     return () => window.removeEventListener("mousemove", move);
   }, []);
 

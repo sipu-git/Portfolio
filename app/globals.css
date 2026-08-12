@@ -32,6 +32,16 @@ html.light {
   --shadow-md: rgba(0, 0, 0, 0.12);
 }
 
+#smooth-wrapper {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+#smooth-content {
+  overflow: visible;
+  width: 100%;
+}
 /* Dark Theme Explicit */
 [data-theme="dark"],
 html.dark {

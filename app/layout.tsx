@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/ui/ThemeProvider";
 import { Navbar } from "@/components/ui/Navbar";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { personalInfo } from "@/data/portfolio";
+import { SmoothScroll } from "@/components/SmoothScroller";
 
 export const metadata: Metadata = {
   title: `${personalInfo.name} | Full Stack Developer Portfolio`,
@@ -27,11 +28,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+      <body>
         <ThemeProvider attribute="data-theme" defaultTheme="dark" enableSystem>
           <CustomCursor />
           <Navbar />
-          <main>{children}</main>
+          <SmoothScroll>
+            <main>{children}</main>
+          </SmoothScroll>
         </ThemeProvider>
       </body>
     </html>

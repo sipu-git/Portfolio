@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { GitBranch, Globe, MessageCircle, Download, Mail, ArrowDown } from "lucide-react";
 import { personalInfo, typingRoles } from "@/data/portfolio";
@@ -7,19 +8,34 @@ import Image from "next/image";
 import { FaLinkedinIn } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa";
 
-const particles = Array.from({ length: 50 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 3 + 1,
-  duration: Math.random() * 10 + 5,
-  delay: Math.random() * 5,
-}));
+type Particle = {
+  id: number;
+  x: number;
+  y: number;
+  size: number;
+  duration: number;
+  delay: number;
+};
 
-// const floatingIcons = ["⚛️", "🚀", "💻", "🔧", "🐳", "☁️", "🗄️", "📱"];
+function generateParticles(count: number): Particle[] {
+  return Array.from({ length: count }, (_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    size: Math.random() * 3 + 1,
+    duration: Math.random() * 10 + 5,
+    delay: Math.random() * 5,
+  }));
+}
+
 
 export function HeroSection() {
   const typedText = useTypingEffect(typingRoles);
+  const [particles, setParticles] = useState<Particle[]>([]);
+
+  useEffect(() => {
+    setParticles(generateParticles(50));
+  }, []);
 
   return (
     <section
@@ -51,26 +67,6 @@ export function HeroSection() {
         ))}
       </div>
 
-      {/* Floating tech icons */}
-      {/* {floatingIcons.map((icon, i) => (
-        <motion.div
-          key={i}
-          className="absolute text-2xl select-none pointer-events-none"
-          style={{
-            left: `${10 + (i * 11) % 80}%`,
-            top: `${15 + (i * 13) % 70}%`,
-          }}
-          animate={{
-            y: [-15, 15, -15],
-            rotate: [-5, 5, -5],
-            opacity: [0.3, 0.6, 0.3],
-          }}
-          transition={{ duration: 4 + i, delay: i * 0.5, repeat: Infinity, ease: "easeInOut" }}
-        >
-          {icon}
-        </motion.div>
-      ))} */}
-
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
         <div className="flex flex-col lg:flex-row items-center gap-12">
@@ -81,16 +77,6 @@ export function HeroSection() {
             transition={{ duration: 0.8 }}
             className="flex-1 text-center lg:text-left"
           >
-            {/* <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-blue-500/20 text-sm text-blue-400 mb-6"
-            >
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              Available for work
-            </motion.div> */}
-
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -140,7 +126,7 @@ export function HeroSection() {
                 download
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all"
+                className="flex items-center gap-2 px-6 py-3 bg-linear-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all"
               >
                 <Download size={18} />
                 Download Resume
@@ -190,7 +176,7 @@ export function HeroSection() {
             initial={{ opacity: 0, x: 60 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="relative flex-shrink-0"
+            className="relative shrink-0"
           >
             <div className="relative w-64 h-64 sm:w-80 sm:h-80">
               {/* Rotating rings */}
@@ -205,9 +191,9 @@ export function HeroSection() {
                 className="absolute inset-4 rounded-full border border-dashed border-indigo-500/20"
               />
               {/* Glow */}
-              <div className="absolute inset-8 rounded-full bg-gradient-to-br from-blue-600/30 to-indigo-600/30 blur-xl" />
+              <div className="absolute inset-8 rounded-full bg-linear-to-br from-blue-600/30 to-indigo-600/30 blur-xl" />
               {/* Avatar placeholder */}
-              <div className="absolute inset-8 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-7xl shadow-2xl glow-blue">
+              <div className="absolute inset-8 rounded-full bg-linear-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-7xl shadow-2xl glow-blue">
                 <Image src="/my-image.jpg" alt="Avatar" width={200} height={200} className="rounded-full" />
               </div>
               {/* Floating badges */}

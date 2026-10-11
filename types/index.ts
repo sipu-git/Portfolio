@@ -21,18 +21,22 @@ export interface Experience {
   type: string;
 }
 
+export type ProjectPreviewKind = "crm" | "expense" | "commerce" | "generic";
+
 export interface Project {
   id: number;
   title: string;
   description: string;
   longDescription: string;
-  image: string;
   tags: string[];
   category: string;
-  github: string;
+  github?: string;
   demo?: string;
+  featured?: boolean;
+  preview: ProjectPreviewKind;
   features: string[];
-  stats: { stars: number; forks: number; issues: number };
+  implementedAi?: string[];
+  plannedAi?: string[];
 }
 
 export interface Service {

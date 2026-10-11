@@ -1,5 +1,4 @@
-"use client";
-import { motion } from "framer-motion";
+import { Reveal } from "@/components/ui/Reveal";
 
 interface SectionHeaderProps {
   badge?: string;
@@ -10,29 +9,22 @@ interface SectionHeaderProps {
 
 export function SectionHeader({ badge, title, highlight, subtitle }: SectionHeaderProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className="text-center mb-16"
-    >
+    <Reveal className="text-center mb-14">
       {badge && (
-        <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20 mb-4 tracking-widest uppercase">
+        <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold bg-[color-mix(in_srgb,var(--primary)_14%,transparent)] text-[var(--primary)] border border-[color-mix(in_srgb,var(--primary)_25%,transparent)] mb-4 tracking-widest uppercase">
           {badge}
         </span>
       )}
-      <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
-        {title}{" "}
-        {highlight && <span className="gradient-text">{highlight}</span>}
+      <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[var(--text-primary)] mb-4 tracking-tight">
+        {title} {highlight && <span className="gradient-text">{highlight}</span>}
       </h2>
       {subtitle && (
-        <p className="text-slate-400 text-lg max-w-2xl mx-auto">{subtitle}</p>
+        <p className="text-[var(--text-secondary)] text-lg max-w-2xl mx-auto leading-relaxed">{subtitle}</p>
       )}
-      <div className="mt-4 flex items-center justify-center gap-2">
-        <div className="h-1 w-12 bg-gradient-to-r from-blue-600 to-cyan-400 rounded-full" />
-        <div className="h-1 w-4 bg-gradient-to-r from-cyan-400 to-indigo-500 rounded-full" />
+      <div className="mt-4 flex items-center justify-center gap-2" aria-hidden="true">
+        <div className="h-1 w-12 rounded-full bg-[linear-gradient(90deg,var(--primary),var(--accent))]" />
+        <div className="h-1 w-4 rounded-full bg-[var(--accent)]" />
       </div>
-    </motion.div>
+    </Reveal>
   );
 }

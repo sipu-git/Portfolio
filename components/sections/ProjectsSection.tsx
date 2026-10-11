@@ -1,215 +1,231 @@
 "use client";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { GitBranch, Star, GitFork, X, Check } from "lucide-react";
+
+import { useEffect, useRef, useState } from "react";
+import { Check, Clock, ExternalLink, GitBranch, X } from "lucide-react";
 import { projects } from "@/data/portfolio";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { Project } from "@/types";
-import Link from "next/link";
+import { Reveal } from "@/components/ui/Reveal";
+import { ProjectShowcase } from "@/components/ui/ProjectShowcase";
+import { Badge } from "@/components/ui/Badge";
+import { ScrollScene } from "@/components/ui/ScrollScene";
+import { useLenis } from "@/components/SmoothScroller";
+import type { Project } from "@/types";
 
-const categories = ["All", ...Array.from(new Set(projects.map((p) => p.category)))];
-
-const projectColors = [
-  "from-blue-600/20 to-indigo-600/20",
-  "from-indigo-600/20 to-purple-600/20",
-  "from-cyan-600/20 to-blue-600/20",
-  "from-purple-600/20 to-pink-600/20",
-];
+const categories = ["All", ...Array.from(new Set(projects.map((project) => project.category)))];
 
 export function ProjectsSection() {
   const [filter, setFilter] = useState("All");
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selected, setSelected] = useState<Project | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const lenis = useLenis();
+  const filtered = filter === "All" ? projects : projects.filter((project) => project.category === filter);
+  const featured = filtered.filter((project) => project.featured);
+  const rest = filtered.filter((project) => !project.featured);
 
-  const filtered = filter === "All" ? projects : projects.filter((p) => p.category === filter);
+  useEffect(() => {
+    if (!selected) return;
+    const previous = document.activeElement as HTMLElement | null;
+    const root = dialogRef.current;
+    const focusables = () =>
+      root
+        ? Array.from(
+            root.querySelectorAll<HTMLElement>("a,button,[href],textarea,input,select,[tabindex]:not([tabindex='-1'])"),
+          )
+        : [];
+    closeRef.current?.focus();
+    lenis?.stop();
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSelected(null);
+      if (event.key !== "Tab" || !root) return;
+      const items = focusables();
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = originalOverflow;
+      lenis?.start();
+      previous?.focus();
+    };
+  }, [selected, lenis]);
 
   return (
-    <section id="projects" className="section-padding bg-slate-950 relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl -translate-x-1/2" />
-
+    <section
+      id="projects"
+      className="section-padding relative overflow-hidden"
+      style={{ backgroundColor: "var(--bg-primary)" }}
+    >
       <div className="max-w-7xl mx-auto">
         <SectionHeader
           badge="Projects"
           title="Featured"
           highlight="Work"
-          subtitle="A collection of projects that showcase my technical skills and problem-solving ability"
+          subtitle="Clearview CRM and ExpenseWallet first, with live demos and source when they are public."
         />
 
-        {/* Filter */}
-        <div className="flex flex-wrap gap-3 justify-center mb-12">
-          {categories.map((cat) => (
-            <motion.button
-              key={cat}
-              onClick={() => setFilter(cat)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`px-5 py-2 rounded-full text-sm font-medium border transition-all ${
-                filter === cat
-                  ? "bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-500/25"
-                  : "glass border-white/10 text-slate-400 hover:text-white"
+        <div className="flex flex-wrap gap-3 justify-center mb-12" role="group" aria-label="Project categories">
+          {categories.map((category) => (
+            <button
+              key={category}
+              type="button"
+              onClick={() => setFilter(category)}
+              aria-pressed={filter === category}
+              className={`px-5 py-2.5 rounded-full text-sm font-medium border ${
+                filter === category
+                  ? "text-white border-transparent bg-[linear-gradient(135deg,var(--primary),var(--accent))]"
+                  : "glass border-[var(--border-color)] text-[var(--text-secondary)]"
               }`}
             >
-              {cat}
-            </motion.button>
+              {category}
+            </button>
           ))}
         </div>
 
-        {/* Project cards */}
-        <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-2 gap-6">
-          <AnimatePresence>
-            {filtered.map((project, i) => (
-              <motion.div
-                key={project.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3, delay: i * 0.1 }}
-                whileHover={{ y: -8 }}
-                className="glass rounded-2xl border border-white/10 overflow-hidden group hover:border-blue-500/30 transition-all cursor-pointer"
-                onClick={() => setSelectedProject(project)}
-              >
-                {/* Project image placeholder */}
-                <div className={`h-48 bg-gradient-to-br ${projectColors[i % projectColors.length]} flex items-center justify-center relative overflow-hidden`}>
-                  <div className="text-6xl select-none">
-                    {["🏢", "🌿", "🛒", "📜"][i % 4]}
+        {featured.length > 0 && (
+          <div className="grid gap-8 mb-8">
+            {featured.map((project, index) => (
+              <Reveal key={project.id} delay={index * 80}>
+                <ScrollScene>
+                  <div className="scroll-layer">
+                    <ProjectShowcase project={project} featured onOpen={setSelected} />
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
-                  <div className="absolute top-4 right-4 flex gap-2">
-                    <span className="text-xs px-2 py-1 rounded-full bg-black/30 text-slate-300 backdrop-blur-sm border border-white/10">
-                      {project.category}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-slate-400 text-sm mb-4 line-clamp-2">{project.description}</p>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.slice(0, 4).map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs px-2 py-1 rounded-md bg-blue-500/10 text-blue-400 border border-blue-500/20"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4 text-xs text-slate-500">
-                      <span className="flex items-center gap-1">
-                        <Star size={12} className="text-amber-400" /> {project.stats.stars}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <GitFork size={12} /> {project.stats.forks}
-                      </span>
-                    </div>
-                    <div className="flex gap-3">
-                      <Link
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="text-slate-400 hover:text-white transition-colors"
-                      >
-                        <GitBranch size={18} />
-                      </Link>
-                      {/* <a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="text-slate-400 hover:text-blue-400 transition-colors"
-                      >
-                        <ExternalLink size={18} />
-                      </a> */}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+                </ScrollScene>
+              </Reveal>
             ))}
-          </AnimatePresence>
-        </motion.div>
+          </div>
+        )}
+
+        {rest.length > 0 && (
+          <div className="grid sm:grid-cols-2 gap-6">
+            {rest.map((project, index) => (
+              <Reveal key={project.id} delay={index * 80}>
+                <ProjectShowcase project={project} onOpen={setSelected} />
+              </Reveal>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Modal */}
-      <AnimatePresence>
-        {selectedProject && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
-            onClick={() => setSelectedProject(null)}
+      {selected && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70"
+          onClick={() => setSelected(null)}
+        >
+          <div
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="project-dialog-title"
+            className="glass border border-[var(--border-color)] rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto"
+            style={{ backgroundColor: "var(--bg-secondary)" }}
+            onClick={(event) => event.stopPropagation()}
+            data-lenis-prevent
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              transition={{ duration: 0.3 }}
-              className="bg-slate-900 border border-white/10 rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="p-8">
-                <div className="flex items-start justify-between mb-6">
-                  <div>
-                    <h2 className="text-2xl font-bold text-white">{selectedProject.title}</h2>
-                    <span className="text-blue-400 text-sm">{selectedProject.category}</span>
-                  </div>
-                  <button
-                    onClick={() => setSelectedProject(null)}
-                    className="w-8 h-8 rounded-lg glass flex items-center justify-center text-slate-400 hover:text-white"
-                  >
-                    <X size={16} />
-                  </button>
+            <div className="p-8">
+              <div className="flex items-start justify-between mb-6 gap-4">
+                <div>
+                  <h2 id="project-dialog-title" className="text-2xl font-bold text-[var(--text-primary)]">
+                    {selected.title}
+                  </h2>
+                  <p className="text-[var(--primary)] text-sm font-medium">{selected.category}</p>
                 </div>
-
-                <p className="text-slate-400 mb-6 leading-relaxed">{selectedProject.longDescription}</p>
-
-                <h3 className="text-sm font-semibold text-slate-300 mb-3">Key Features</h3>
-                <ul className="space-y-2 mb-6">
-                  {selectedProject.features.map((f, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-slate-400">
-                      <Check size={14} className="text-emerald-400 mt-0.5 flex-shrink-0" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {selectedProject.tags.map((tag) => (
-                    <span key={tag} className="text-xs px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="flex gap-3">
-                  <a
-                    href={selectedProject.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-5 py-2.5 glass border border-white/10 rounded-xl text-sm text-slate-300 hover:text-white hover:border-white/20 transition-all"
-                  >
-                    <GitBranch size={16} /> View Code
-                  </a>
-                  {/* <a
-                    href={selectedProject.demo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl text-sm font-medium hover:shadow-lg hover:shadow-blue-500/25 transition-all"
-                  >
-                    <ExternalLink size={16} /> Live Demo
-                  </a> */}
-                </div>
+                <button
+                  ref={closeRef}
+                  type="button"
+                  onClick={() => setSelected(null)}
+                  className="w-8 h-8 rounded-lg glass flex items-center justify-center"
+                  aria-label="Close project details"
+                >
+                  <X size={16} />
+                </button>
               </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+              <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">{selected.longDescription}</p>
+
+              <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-3">Implemented</h3>
+              <ul className="space-y-2 mb-6">
+                {selected.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-2 text-sm text-[var(--text-secondary)]">
+                    <Check size={14} className="text-emerald-500 mt-0.5 shrink-0" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+
+              {selected.implementedAi && selected.implementedAi.length > 0 && (
+                <>
+                  <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-3">Implemented AI</h3>
+                  <ul className="space-y-2 mb-6">
+                    {selected.implementedAi.map((feature) => (
+                      <li key={feature} className="flex items-start gap-2 text-sm text-[var(--text-secondary)]">
+                        <Check size={14} className="text-emerald-500 mt-0.5 shrink-0" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+
+              {selected.plannedAi && selected.plannedAi.length > 0 && (
+                <>
+                  <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-3">Planned AI</h3>
+                  <ul className="space-y-2 mb-6">
+                    {selected.plannedAi.map((feature) => (
+                      <li key={feature} className="flex items-start gap-2 text-sm text-[var(--text-secondary)]">
+                        <Clock size={14} className="text-amber-500 mt-0.5 shrink-0" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+
+              <div className="flex flex-wrap gap-2 mb-6">
+                {selected.tags.map((tag) => (
+                  <Badge key={tag}>{tag}</Badge>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap gap-3">
+                {selected.github && (
+                  <a
+                    href={selected.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-5 py-2.5 glass rounded-xl text-sm font-medium"
+                  >
+                    <GitBranch size={16} /> View code
+                  </a>
+                )}
+                {selected.demo && (
+                  <a
+                    href={selected.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-white bg-[linear-gradient(135deg,var(--primary),var(--accent))]"
+                  >
+                    <ExternalLink size={16} /> Live demo
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

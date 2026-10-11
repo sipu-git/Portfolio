@@ -1,9 +1,8 @@
 "use client";
-import { motion } from "framer-motion";
-import { ArrowUp, GitBranch, Globe, MessageCircle, Code2, Heart } from "lucide-react";
+
+import { ArrowUp, BriefcaseBusiness, Code2, GitBranch, Heart } from "lucide-react";
 import { personalInfo } from "@/data/portfolio";
-import { FaGithub } from "react-icons/fa";
-import { FaLinkedinIn } from "react-icons/fa6";
+import { useLenis } from "@/components/SmoothScroller";
 
 const quickLinks = [
   { label: "About", href: "#about" },
@@ -15,87 +14,77 @@ const quickLinks = [
 ];
 
 export function Footer() {
-  const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  const lenis = useLenis();
 
   return (
-    <footer className="bg-slate-950 border-t border-white/5 relative">
+    <footer className="border-t border-[var(--border-color)]" style={{ backgroundColor: "var(--bg-primary)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid sm:grid-cols-3 gap-8 mb-10">
-          {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-[linear-gradient(135deg,var(--primary),var(--accent))] rounded-lg flex items-center justify-center">
                 <Code2 size={16} className="text-white" />
               </div>
               <span className="font-bold text-lg gradient-text">{personalInfo.name}</span>
             </div>
-            <p className="text-slate-500 text-sm leading-relaxed">
-              Building digital experiences with passion and precision. Open to exciting opportunities.
+            <p className="text-[var(--text-tertiary)] text-sm leading-relaxed">
+              Building digital products with typed APIs, careful UX, and production performance.
             </p>
           </div>
-
-          {/* Quick Links */}
-          <div>
-            <h3 className="font-semibold text-white mb-4 text-sm uppercase tracking-widest">Quick Links</h3>
+          <nav aria-label="Footer">
+            <h2 className="font-semibold text-[var(--text-primary)] mb-4 text-sm uppercase tracking-widest">Quick links</h2>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      document.querySelector(link.href)?.scrollIntoView({ behavior: "smooth" });
-                    }}
-                    className="text-slate-500 hover:text-blue-400 transition-colors text-sm"
-                  >
+                  <a href={link.href} className="text-[var(--text-tertiary)] hover:text-[var(--primary)] text-sm font-medium">
                     {link.label}
                   </a>
                 </li>
               ))}
             </ul>
-          </div>
-
-          {/* Social */}
+          </nav>
           <div>
-            <h3 className="font-semibold text-white mb-4 text-sm uppercase tracking-widest">Connect</h3>
+            <h2 className="font-semibold text-[var(--text-primary)] mb-4 text-sm uppercase tracking-widest">Connect</h2>
             <div className="flex gap-3 mb-4">
-              {[
-                { icon: FaGithub, href: personalInfo.social.github, label: "GitHub" },
-                { icon: FaLinkedinIn, href: personalInfo.social.linkedin, label: "LinkedIn" },
-                // { icon: MessageCircle, href: personalInfo.social.twitter, label: "Twitter" },
-              ].map(({ icon: Icon, href, label }) => (
-                <motion.a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  whileHover={{ scale: 1.15, y: -2 }}
-                  className="w-10 h-10 glass border border-white/10 rounded-xl flex items-center justify-center text-slate-400 hover:text-blue-400 hover:border-blue-500/20 transition-all"
-                >
-                  <Icon size={17} />
-                </motion.a>
-              ))}
+              <a
+                href={personalInfo.social.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                className="w-10 h-10 glass rounded-xl flex items-center justify-center text-[var(--text-secondary)]"
+              >
+                <GitBranch size={17} />
+              </a>
+              <a
+                href={personalInfo.social.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="w-10 h-10 glass rounded-xl flex items-center justify-center text-[var(--text-secondary)]"
+              >
+                <BriefcaseBusiness size={17} />
+              </a>
             </div>
-            <a href={`mailto:${personalInfo.email}`} className="text-slate-500 hover:text-blue-400 text-sm transition-colors">
+            <a href={`mailto:${personalInfo.email}`} className="text-[var(--text-tertiary)] hover:text-[var(--primary)] text-sm">
               {personalInfo.email}
             </a>
           </div>
         </div>
-
-        <div className="border-t border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-slate-600 text-sm flex items-center gap-1">
-            © {new Date().getFullYear()} {personalInfo.name}. Built with{" "}
-            <Heart size={12} className="text-red-400 inline" /> & Next.js
+        <div className="border-t border-[var(--border-color)] pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-[var(--text-tertiary)] text-sm flex items-center gap-1">
+            © {new Date().getFullYear()} {personalInfo.name}. Built with
+            <Heart size={12} className="text-red-400 fill-red-400" /> Next.js
           </p>
-          <motion.button
-            onClick={scrollTop}
-            whileHover={{ scale: 1.1, y: -2 }}
-            whileTap={{ scale: 0.9 }}
-            className="flex items-center gap-2 text-sm text-slate-500 hover:text-blue-400 transition-colors"
+          <button
+            type="button"
+            onClick={() => {
+              if (lenis) lenis.scrollTo(0, { duration: 1 });
+              else window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            className="flex items-center gap-2 text-sm text-[var(--text-tertiary)] hover:text-[var(--primary)]"
           >
             Back to top <ArrowUp size={14} />
-          </motion.button>
+          </button>
         </div>
       </div>
     </footer>

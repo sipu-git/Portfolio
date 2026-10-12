@@ -1,21 +1,20 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { Monitor, Moon, Palette, Sun, X } from "lucide-react";
+import { Moon, Palette, Sun, X } from "lucide-react";
 import { useTheme } from "@/components/ui/ThemeProvider";
 import { accents, type ThemeMode } from "@/lib/theme";
 
-const modes: { id: ThemeMode; label: string; icon: typeof Sun }[] = [
-  { id: "light", label: "Light", icon: Sun },
-  { id: "dark", label: "Dark", icon: Moon },
-  { id: "system", label: "System", icon: Monitor },
-];
-
 export function ThemeToggle() {
-  const { mode, accent, setMode, setAccent } = useTheme();
+  const { mode, accent, resolvedTheme, setMode, setAccent } = useTheme();
   const [open, setOpen] = useState(false);
   const panelId = useId();
   const panelRef = useRef<HTMLDivElement>(null);
+  const modes: { id: ThemeMode; label: string; icon: typeof Sun }[] = [
+    { id: "light", label: "Light", icon: Sun },
+    { id: "dark", label: "Dark", icon: Moon },
+    { id: "system", label: "System", icon: resolvedTheme === "dark" ? Moon : Sun },
+  ];
 
   useEffect(() => {
     if (!open) return;

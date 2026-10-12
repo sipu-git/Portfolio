@@ -4,10 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { Check, Clock, ExternalLink, GitBranch, X } from "lucide-react";
 import { projects } from "@/data/portfolio";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { Reveal } from "@/components/ui/Reveal";
 import { ProjectShowcase } from "@/components/ui/ProjectShowcase";
 import { Badge } from "@/components/ui/Badge";
-import { ScrollScene } from "@/components/ui/ScrollScene";
 import { useLenis } from "@/components/SmoothScroller";
 import type { Project } from "@/types";
 
@@ -20,8 +18,6 @@ export function ProjectsSection() {
   const closeRef = useRef<HTMLButtonElement>(null);
   const lenis = useLenis();
   const filtered = filter === "All" ? projects : projects.filter((project) => project.category === filter);
-  const featured = filtered.filter((project) => project.featured);
-  const rest = filtered.filter((project) => !project.featured);
 
   useEffect(() => {
     if (!selected) return;
@@ -95,29 +91,16 @@ export function ProjectsSection() {
           ))}
         </div>
 
-        {featured.length > 0 && (
-          <div className="grid gap-8 mb-8">
-            {featured.map((project, index) => (
-              <Reveal key={project.id} delay={index * 80}>
-                <ScrollScene>
-                  <div className="scroll-layer">
-                    <ProjectShowcase project={project} featured onOpen={setSelected} />
-                  </div>
-                </ScrollScene>
-              </Reveal>
-            ))}
-          </div>
-        )}
-
-        {rest.length > 0 && (
-          <div className="grid sm:grid-cols-2 gap-6">
-            {rest.map((project, index) => (
-              <Reveal key={project.id} delay={index * 80}>
-                <ProjectShowcase project={project} onOpen={setSelected} />
-              </Reveal>
-            ))}
-          </div>
-        )}
+        <div className="flex flex-row snap-x snap-mandatory gap-4 overflow-x-auto pb-3 sm:gap-5 lg:overflow-visible">
+          {filtered.map((project) => (
+            <div
+              key={project.id}
+              className="w-[min(88vw,32rem)] shrink-0 snap-start sm:w-[min(70vw,34rem)] lg:w-[calc(50%-0.625rem)]"
+            >
+              <ProjectShowcase project={project} onOpen={setSelected} />
+            </div>
+          ))}
+        </div>
       </div>
 
       {selected && (

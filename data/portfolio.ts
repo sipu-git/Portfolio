@@ -55,6 +55,7 @@ export const skillCategories = [
       { name: "JavaScript", level: 88 },
       { name: "Tailwind CSS", level: 92 },
       { name: "Redux/Toolkit", level: 75 },
+      { name: "TanStack Query", level: 82 },
     ],
   },
   {
@@ -77,18 +78,21 @@ export const skillCategories = [
     ],
   },
   {
-    category: "DevOps",
+    category: "AI Integration",
     color: "purple",
     skills: [
-      { name: "Docker", level: 60 },
-      { name: "AWS", level: 60 },
-      { name: "GitHub Actions", level: 75 },
+      { name: "Google Gemini", level: 82 },
+      { name: "AWS Bedrock", level: 72 },
+      { name: "AI Tool Calling", level: 78 },
     ],
   },
   {
-    category: "Tools",
+    category: "Cloud & Tools",
     color: "pink",
     skills: [
+      { name: "AWS", level: 75 },
+      { name: "Vercel", level: 82 },
+      { name: "Render", level: 75 },
       { name: "Git", level: 90 },
       { name: "Postman", level: 95 },
       { name: "VS Code", level: 98 },
@@ -119,10 +123,10 @@ export const projects = [
     id: 1,
     title: "Clearview CRM",
     description:
-      "Lead-to-cash CRM with capture, qualification, a deal kanban, invoicing, and Gmail plus WhatsApp integrations. Built with React, TypeScript, Prisma, PostgreSQL, Redis, and AWS RDS.",
+      "Multi-tenant CRM with completed AI assistant integration, tool calling, and AWS S3 file management alongside lead pipelines, invoicing, Gmail, and WhatsApp.",
     longDescription:
-      "Clearview CRM is a multi-tenant workspace for pipeline, conversations, and invoicing. Inbound leads arrive from website forms, email, manual entry, RFPs, and referrals, are de-duplicated on email, and assigned to a rep. Qualified leads convert to contacts. Deals move through Discovery → Proposal → Negotiation → Won/Lost. Won deals draft invoices and update a customer ledger. Gmail and WhatsApp are messaging integrations, not generative AI. Planned AI work is listed separately from what ships today.",
-    tags: ["React", "TypeScript", "Prisma", "PostgreSQL", "Redis", "AWS RDS", "WhatsApp", "Gmail"],
+      "Clearview CRM is a multi-tenant workspace for pipeline, conversations, and invoicing. Inbound leads arrive from website forms, email, manual entry, RFPs, and referrals, are de-duplicated on email, and assigned to a rep. Qualified leads convert to contacts. Deals move through Discovery → Proposal → Negotiation → Won/Lost. The completed Synora AI integration supports CRM assistance through tool calling, while AWS S3 handles workspace file storage. Gmail and WhatsApp support customer conversations.",
+    tags: ["React", "TypeScript", "Prisma", "PostgreSQL", "Redis", "AWS RDS", "AWS S3", "AI Tool Calling"],
     category: "Full Stack",
     github: "https://github.com/sipu-git/crm-platform",
     demo: "https://crm-platform-weld.vercel.app",
@@ -133,14 +137,11 @@ export const projects = [
       "Email de-duplication and auto/manual assignment to a rep",
       "Lead statuses: New → Contacted → Qualified, then convert to a contact",
       "Deal kanban: Discovery, Proposal, Negotiation, Won / Lost",
-      "Invoice draft on win, with sent / paid / overdue states",
-      "Gmail integration via Google APIs and WhatsApp messaging hooks",
-      "Prisma + PostgreSQL on AWS RDS, with Redis for session and cache",
+      "Synora AI assistant integrated with CRM tool calling",
+      "AWS S3 file management for workspace attachments",
+      "Invoice drafts plus Gmail and WhatsApp integrations",
     ],
-    plannedAi: [
-      "Lead scoring and suggested next actions",
-      "Drafted email/WhatsApp replies from deal context",
-    ],
+    implementedAi: ["Completed Synora AI assistant integration with CRM tool calling"],
   },
   {
     id: 2,
@@ -165,42 +166,6 @@ export const projects = [
     plannedAi: [
       "Automatic category suggestions from parsed receipts",
       "Monthly spend narratives and anomaly alerts from Gemini",
-    ],
-  },
-  {
-    id: 3,
-    title: "E-Commerce Platform",
-    description:
-      "Multi-surface storefront and admin with inventory, checkout, and order tracking. Frontend, admin, and API live as separate repositories.",
-    longDescription:
-      "An e-commerce stack split into storefront, admin, and backend services. It covers catalog browsing, cart and order flows, and an operator dashboard. Stripe, Redis, and MySQL appear in the original product notes; public source is the three sipu-git e-commerce repositories.",
-    tags: ["React", "Express.js", "MySQL", "Stripe", "Redis"],
-    category: "Full Stack",
-    github: "https://github.com/sipu-git/e-commerce-frontend",
-    featured: false,
-    preview: "commerce" as const,
-    features: [
-      "Storefront, admin, and API as separate apps",
-      "Catalog, cart, and order tracking flows",
-      "Operator dashboard for inventory and orders",
-    ],
-  },
-  {
-    id: 4,
-    title: "HRMS Platform",
-    description:
-      "Human resource workflows covering employee records, attendance, payroll, and reviews.",
-    longDescription:
-      "An HRMS focused on employee lifecycle operations: records, attendance, payroll calculations, and review cycles. It is listed as a product I have built; a dedicated public demo is not published yet.",
-    tags: ["React", "Node.js", "PostgreSQL", "Docker", "Redis"],
-    category: "Full Stack",
-    featured: false,
-    preview: "generic" as const,
-    features: [
-      "Employee lifecycle records",
-      "Attendance tracking",
-      "Payroll and review workflows",
-      "Role-based access",
     ],
   },
 ];

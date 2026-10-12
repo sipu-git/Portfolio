@@ -235,6 +235,10 @@ body.has-custom-cursor * {
   border: 1px solid var(--glass-border);
 }
 
+.project-card {
+  contain: layout paint;
+}
+
 .gradient-text {
   background: linear-gradient(135deg, var(--primary), var(--accent));
   -webkit-background-clip: text;
@@ -284,6 +288,14 @@ body.has-custom-cursor * {
 .tilt-card {
   transform-style: preserve-3d;
   transition: transform 0.18s ease-out;
+}
+
+.floating-nav-links {
+  scrollbar-width: none;
+}
+
+.floating-nav-links::-webkit-scrollbar {
+  display: none;
 }
 
 .scroll-scene {
@@ -414,132 +426,6 @@ body.has-custom-cursor * {
 
 .is-visible .skill-bar {
   transform: scaleX(1);
-}
-
-.project-preview {
-  height: 12.5rem;
-  padding: 1rem;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--primary) 22%, transparent), transparent 45%),
-    linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
-}
-
-.featured-preview {
-  height: 16.5rem;
-}
-
-.preview-chrome {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  margin-bottom: 0.85rem;
-}
-
-.preview-chrome span {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--text-tertiary) 70%, transparent);
-}
-
-.preview-chrome p {
-  margin-left: 0.5rem;
-  font-size: 0.7rem;
-  color: var(--text-tertiary);
-}
-
-.preview-kpis,
-.preview-board,
-.preview-products,
-.preview-chart {
-  display: grid;
-  gap: 0.5rem;
-}
-
-.preview-kpis {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.preview-kpis div,
-.preview-column,
-.preview-receipts,
-.preview-products div,
-.generic-lines i {
-  border-radius: 0.7rem;
-  background: color-mix(in srgb, var(--bg-primary) 55%, transparent);
-  border: 1px solid var(--border-color);
-  padding: 0.45rem;
-}
-
-.preview-kpis small {
-  display: block;
-  font-size: 0.6rem;
-  color: var(--text-tertiary);
-}
-
-.preview-kpis strong {
-  font-size: 0.75rem;
-}
-
-.preview-board {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.preview-column span {
-  display: block;
-  font-size: 0.65rem;
-  margin-bottom: 0.35rem;
-  color: var(--text-secondary);
-}
-
-.preview-column i,
-.generic-lines i {
-  display: block;
-  height: 0.45rem;
-  margin-top: 0.3rem;
-  background: color-mix(in srgb, var(--primary) 35%, transparent);
-}
-
-.preview-chart {
-  grid-template-columns: 1.4fr 1fr;
-  min-height: 7.5rem;
-}
-
-.bars {
-  display: flex;
-  align-items: flex-end;
-  gap: 0.4rem;
-  height: 7rem;
-  padding: 0.6rem;
-  border-radius: 0.8rem;
-  background: color-mix(in srgb, var(--bg-primary) 50%, transparent);
-}
-
-.bars i {
-  flex: 1;
-  border-radius: 0.35rem 0.35rem 0 0;
-  background: linear-gradient(180deg, var(--primary), var(--accent));
-}
-
-.preview-receipts p {
-  font-size: 0.75rem;
-  margin-bottom: 0.45rem;
-  color: var(--text-secondary);
-}
-
-.preview-products {
-  grid-template-columns: repeat(3, 1fr);
-  min-height: 7rem;
-}
-
-.preview-products div {
-  min-height: 6.5rem;
-}
-
-.generic-lines {
-  display: grid;
-  gap: 0.55rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

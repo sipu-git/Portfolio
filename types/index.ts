@@ -21,8 +21,6 @@ export interface Experience {
   type: string;
 }
 
-export type ProjectPreviewKind = "crm" | "expense" | "commerce" | "generic";
-
 export interface Project {
   id: number;
   title: string;
@@ -33,7 +31,7 @@ export interface Project {
   github?: string;
   demo?: string;
   featured?: boolean;
-  preview: ProjectPreviewKind;
+  preview: "crm" | "expense";
   features: string[];
   implementedAi?: string[];
   plannedAi?: string[];

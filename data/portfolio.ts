@@ -7,7 +7,7 @@ export const personalInfo = {
   bio: "Software developer with 1 year of experience building scalable web applications. I turn complex product problems into clean, maintainable interfaces and APIs.",
   summary:
     "I specialize in end-to-end web applications: pixel-accurate UIs, typed APIs, relational data models, caching, and cloud-backed storage. Recent work includes a CRM with messaging integrations and an expense platform with receipt storage and Gemini-assisted workflows.",
-  avatar: "/images/avatar.jpg",
+  avatar: "/avatar-img.jpeg",
   resumeUrl: "https://drive.google.com/file/d/1lmhf9mYTx3_2NK4LKkUmYyMiEV3a7Gih/view?usp=drivesdk",
   social: {
     github: "https://github.com/sipu-git",
